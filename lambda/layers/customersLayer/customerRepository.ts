@@ -72,7 +72,7 @@ export class CustomerRepository {
 
   async listCustomers(
     limit: number,
-    lastEvaluatedKey: number
+    lastEvaluatedKey: number | null
   ): Promise<Customer[]> {
     const params = {
       TableName: this.customersTableName,
