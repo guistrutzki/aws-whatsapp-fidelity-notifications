@@ -1,21 +1,37 @@
 #!/usr/bin/env node
 import 'source-map-support/register';
 import * as cdk from 'aws-cdk-lib';
+import * as dotenv from 'dotenv';
+
 import { AwsWhatsappFidelityNotificationsStack } from '../lib/aws-whatsapp-fidelity-notifications-stack';
 
+dotenv.config();
+
 const app = new cdk.App();
-new AwsWhatsappFidelityNotificationsStack(app, 'AwsWhatsappFidelityNotificationsStack', {
-  /* If you don't specify 'env', this stack will be environment-agnostic.
-   * Account/Region-dependent features and context lookups will not work,
-   * but a single synthesized template can be deployed anywhere. */
 
-  /* Uncomment the next line to specialize this stack for the AWS Account
-   * and Region that are implied by the current CLI configuration. */
-  // env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
+const env: cdk.Environment = {
+  account: process.env.AWS_ACCOUNT as string,
+  region: process.env.AWS_REGION as string,
+};
 
-  /* Uncomment the next line if you know exactly what Account and Region you
-   * want to deploy the stack to. */
-  // env: { account: '123456789012', region: 'us-east-1' },
+const tags = {
+  cost: process.env.COST_CENTER as string,
+  team: process.env.TEAM as string,
+};
 
-  /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
-});
+new AwsWhatsappFidelityNotificationsStack(
+  app,
+  'AwsWhatsappFidelityNotificationsStack',
+  {
+    /* If you don't specify 'env', this stack will be environment-agnostic.
+     * Account/Region-dependent features and context lookups will not work,
+     * but a single synthesized template can be deployed anywhere. */
+    /* Uncomment the next line to specialize this stack for the AWS Account
+     * and Region that are implied by the current CLI configuration. */
+    // env: { account: process.env.CDK_DEFAULT_ACCOUNT, region: process.env.CDK_DEFAULT_REGION },
+    /* Uncomment the next line if you know exactly what Account and Region you
+     * want to deploy the stack to. */
+    // env: { account: '123456789012', region: 'us-east-1' },
+    /* For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html */
+  }
+);
